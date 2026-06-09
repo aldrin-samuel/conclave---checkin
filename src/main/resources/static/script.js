@@ -343,3 +343,12 @@ async function loadAttendees(type){
         )
         .innerHTML = html;
 }
+function logout(){
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    window.location =
+        "/login.html";
+}
