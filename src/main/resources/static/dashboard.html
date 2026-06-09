@@ -103,15 +103,31 @@
 
 <hr>
 
-<h2>Attendees</h2>
+<h2 id="attendeeListTitle">
+
+
+
+</h2>
 
 <div id="attendeeList"></div>
 
-<hr>
+<div id="attendeeModal" class="modal">
 
-<h2>Attendee Details</h2>
+    <div class="modal-content">
 
-<div id="attendeeCard"></div>
+        <span
+                class="close"
+                onclick="closeModal()">
+
+            &times;
+
+        </span>
+
+        <div id="attendeeCard"></div>
+
+    </div>
+
+</div>
 
 <script src="script.js"></script>
 

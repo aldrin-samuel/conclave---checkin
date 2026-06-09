@@ -63,7 +63,11 @@ function renderAttendee(attendee){
 
         </div>
     `;
-}
+
+    document.getElementById(
+        "attendeeModal"
+    ).style.display = "block";
+    }
 
 function loadAttendee(uid){
 
@@ -302,16 +306,28 @@ async function loadAttendees(type){
 
     let url = "";
 
+    let title = "";
+
     if(type === "checkedIn"){
 
         url =
             "/api/attendees/checked-in";
 
+        title =
+            "Checked-In Attendees";
+
     }else{
 
         url =
             "/api/attendees/pending";
+
+        title =
+            "Pending Check-In Attendees";
     }
+
+    document.getElementById(
+        "attendeeListTitle"
+    ).innerText = title;
 
     const response =
         await fetch(url);
@@ -321,21 +337,33 @@ async function loadAttendees(type){
 
     let html = "";
 
-    attendees.forEach(attendee => {
+    if(attendees.length === 0){
 
-        html += `
-            <div
-                class="result"
-                onclick="loadAttendee('${attendee.uid}')"
-            >
+        html =
+            `
+                <div class="result">
+                    No attendees found
+                </div>
+            `;
 
-                <b>${attendee.fullName}</b><br>
+    }else{
 
-                ${attendee.organizationName}
+        attendees.forEach(attendee => {
 
-            </div>
-        `;
-    });
+            html += `
+                <div
+                    class="result"
+                    onclick="loadAttendee('${attendee.uid}')"
+                >
+
+                    <b>${attendee.fullName}</b><br>
+
+                    ${attendee.organizationName}
+
+                </div>
+            `;
+        });
+    }
 
     document
         .getElementById(
@@ -351,4 +379,28 @@ function logout(){
 
     window.location =
         "/login.html";
+}
+
+function closeModal(){
+
+    document
+        .getElementById(
+            "attendeeModal"
+        )
+        .style.display =
+            "none";
+}
+
+window.onclick = function(event){
+
+    const modal =
+        document.getElementById(
+            "attendeeModal"
+        );
+
+    if(event.target === modal){
+
+        modal.style.display =
+            "none";
+    }
 }

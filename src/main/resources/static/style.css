@@ -212,3 +212,71 @@ button{
 ```
 
 }
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    z-index:9999;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.5
+        );
+}
+
+.modal-content{
+
+    background:white;
+
+    width:90%;
+
+    max-width:500px;
+
+    margin:40px auto;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    max-height:85vh;
+
+    overflow-y:auto;
+}
+
+.close{
+
+    float:right;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    color:#666;
+}
+
+.close:hover{
+
+    color:black;
+}
+
+.photo{
+
+    width:180px;
+    height:180px;
+}
