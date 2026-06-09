@@ -83,85 +83,12 @@ public class AttendeeController {
                 );
     }
 
-    @GetMapping("/testmail")
-    public String testMail() {
-
-        emailService.sendEmail(
-                "kanagasamuel@gmail.com",
-                "Conclave Test",
-                "Email service is working."
-        );
-
-        return "Mail Sent";
-    }
-
-    @GetMapping("/testqr/{uid}")
-    public String testQr(
-            @PathVariable String uid
-    ) throws Exception {
-
-        qrService.generateQr(uid);
-
-        return "QR Generated";
-    }
-
-    @GetMapping("/test-pass/{uid}")
-    public String testPass(
-            @PathVariable UUID uid
-    ) throws Exception {
-
-        Attendee attendee =
-                repository.findById(uid)
-                        .orElseThrow();
-
-        File qr =
-                qrService.generateQr(
-                        attendee.getUid().toString()
-                );
-
-        File pass =
-                passService.generatePass(
-                        attendee,
-                        qr
-                );
-
-        return pass.getAbsolutePath();
-    }
-
     @PostMapping("/attendees/send-pending-passes")
     public String sendPendingPasses() throws Exception {
 
         attendeeService.sendPendingPasses();
 
         return "Passes Sent Successfully";
-    }
-
-    @PostMapping("/test-mail/{uid}")
-    public String testMail(
-            @PathVariable UUID uid
-    ) throws Exception {
-
-        Attendee attendee =
-                repository.findById(uid)
-                        .orElseThrow();
-
-        File qr =
-                qrService.generateQr(
-                        attendee.getUid().toString()
-                );
-
-        File pass =
-                passService.generatePass(
-                        attendee,
-                        qr
-                );
-
-        emailService.sendPass(
-                attendee.getEmailId(),
-                pass
-        );
-
-        return "Mail Sent";
     }
 
     @GetMapping("/dashboard/stats")
