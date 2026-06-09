@@ -243,8 +243,6 @@ function loadDashboard(){
         });
 }
 
-loadDashboard();
-
 async function login(){
 
     const username =
