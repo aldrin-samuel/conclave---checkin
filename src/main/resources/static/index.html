@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conclave Check-In</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+<div class="dashboard">
+
+    <h1>Conclave Check-In</h1>
+
+    <button
+            id="sendPassBtn"
+            onclick="sendPendingPasses()">
+        Send Pending Passes
+    </button>
+
+    <br><br>
+
+    <div class="stat-card">
+        <h3>Total Registered</h3>
+        <p id="totalRegistered">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Checked In</h3>
+        <p id="checkedIn">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Pending Check-In</h3>
+        <p id="pendingCheckIn">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Passes Sent</h3>
+        <p id="passesSent">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Passes Pending</h3>
+        <p id="passesPending">0</p>
+    </div>
+
+</div>
+
+<h1>Conclave Check-In</h1>
+
+<input
+        id="search"
+        placeholder="Search Name / Email / Mobile"
+        onkeyup="searchAttendee()"
+>
+
+<div id="searchResults"></div>
+
+<hr>
+
+<h2>QR Scanner</h2>
+
+<div id="reader"></div>
+
+<hr>
+
+<div id="attendeeCard"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
