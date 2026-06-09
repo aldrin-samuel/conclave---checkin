@@ -199,4 +199,16 @@ public class AttendeeController {
 
         return stats;
     }
+
+    @GetMapping("/attendees/checked-in")
+    public List<Attendee> checkedIn() {
+
+        return repository.findByCheckedInTrue();
+    }
+
+    @GetMapping("/attendees/pending")
+    public List<Attendee> pending() {
+
+        return repository.findByCheckedInFalse();
+    }
 }

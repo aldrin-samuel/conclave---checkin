@@ -6,7 +6,7 @@ function renderAttendee(attendee){
 
         statusHtml = `
             <p class="checked">
-                ✓ Checked In at
+                Checked In at
                 ${new Date(attendee.checkinTime).toLocaleTimeString(
                     "en-IN",
                     {
@@ -21,26 +21,13 @@ function renderAttendee(attendee){
 
         statusHtml = `
             <p class="notchecked">
-                ✗ Yet To Check In
+                Yet To Check In
             </p>
         `;
     }
 
     let imageUrl = attendee.photoUrl;
 
-    if (imageUrl && imageUrl.includes("drive.google.com")) {
-
-        const match = imageUrl.match(/\/d\/([^/]+)/);
-
-        if (match) {
-
-            imageUrl =
-                `https://drive.google.com/uc?export=view&id=${match[1]}`;
-        }
-    }
-
-console.log(attendee.photoUrl);
-console.log(imageUrl);
     document.getElementById("attendeeCard").innerHTML = `
 
         <div class="card">
@@ -147,12 +134,35 @@ const scanner = new Html5QrcodeScanner(
     }
 );
 
-scanner.render(
-    onScanSuccess,
-    error => {
-        console.log(error);
-    }
-);
+function startScanner(){
+
+    const scanner =
+        new Html5QrcodeScanner(
+            "reader",
+            {
+                fps:10,
+                qrbox:250
+            }
+        );
+
+    scanner.render(
+
+        function(decodedText){
+
+            scanner.clear();
+
+            loadAttendee(decodedText);
+
+            document.getElementById(
+                "scanAgainBtn"
+            ).style.display =
+                "block";
+
+        },
+
+        function(error){}
+    );
+}
 
 async function sendPendingPasses() {
 
@@ -198,10 +208,12 @@ async function sendPendingPasses() {
     }
 }
 
-function loadDashboard() {
+function loadDashboard(){
 
     fetch("/api/dashboard/stats")
+
         .then(response => response.json())
+
         .then(data => {
 
             document.getElementById(
@@ -232,3 +244,104 @@ function loadDashboard() {
 }
 
 loadDashboard();
+
+async function login(){
+
+    const username =
+        document
+            .getElementById(
+                "username"
+            ).value;
+
+    const password =
+        document
+            .getElementById(
+                "password"
+            ).value;
+
+    const response =
+        await fetch(
+            "/api/auth/login",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:JSON.stringify({
+
+                    username,
+                    password
+
+                })
+            }
+        );
+
+    const result =
+        await response.text();
+
+    if(result === "SUCCESS"){
+
+        localStorage.setItem(
+            "loggedIn",
+            "true"
+        );
+
+        window.location =
+            "/dashboard.html";
+
+    }else{
+
+        alert(
+            "Invalid Credentials"
+        );
+    }
+}
+
+async function loadAttendees(type){
+
+    let url = "";
+
+    if(type === "checkedIn"){
+
+        url =
+            "/api/attendees/checked-in";
+
+    }else{
+
+        url =
+            "/api/attendees/pending";
+    }
+
+    const response =
+        await fetch(url);
+
+    const attendees =
+        await response.json();
+
+    let html = "";
+
+    attendees.forEach(attendee => {
+
+        html += `
+            <div
+                class="result"
+                onclick="loadAttendee('${attendee.uid}')"
+            >
+
+                <b>${attendee.fullName}</b><br>
+
+                ${attendee.organizationName}
+
+            </div>
+        `;
+    });
+
+    document
+        .getElementById(
+            "attendeeList"
+        )
+        .innerHTML = html;
+}

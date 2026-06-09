@@ -1,51 +1,40 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>Conclave Check-In</title>
 
     <link rel="stylesheet" href="style.css">
 
     <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <script>
+
+        if(
+            localStorage.getItem(
+                "loggedIn"
+            ) !== "true"
+        ){
+
+            window.location =
+                "/login.html";
+        }
+
+    </script>
+
 </head>
+
 <body>
-<div class="dashboard">
 
-    <h1>Conclave Check-In</h1>
+<nav>
 
-    <button
-            id="sendPassBtn"
-            onclick="sendPendingPasses()">
-        Send Pending Passes
-    </button>
+    <a href="dashboard.html">Dashboard</a>
 
-    <br><br>
+    <a href="index.html">Check-In</a>
 
-    <div class="stat-card">
-        <h3>Total Registered</h3>
-        <p id="totalRegistered">0</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>Checked In</h3>
-        <p id="checkedIn">0</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>Pending Check-In</h3>
-        <p id="pendingCheckIn">0</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>Passes Sent</h3>
-        <p id="passesSent">0</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>Passes Pending</h3>
-        <p id="passesPending">0</p>
-    </div>
-
-</div>
+</nav>
 
 <h1>Conclave Check-In</h1>
 
@@ -63,11 +52,27 @@
 
 <div id="reader"></div>
 
+<button
+        id="scanAgainBtn"
+        onclick="startScanner()"
+        style="display:none;">
+
+    Scan Another QR
+
+</button>
+
 <hr>
 
 <div id="attendeeCard"></div>
 
 <script src="script.js"></script>
 
+<script>
+
+    startScanner();
+
+</script>
+
 </body>
+
 </html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Conclave Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+
+        if(
+            localStorage.getItem(
+                "loggedIn"
+            ) !== "true"
+        ){
+
+            window.location =
+                "/login.html";
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<nav>
+
+    <a href="dashboard.html">Dashboard</a>
+
+    <a href="index.html">Check-In</a>
+
+</nav>
+
+<h1>Conclave Dashboard</h1>
+
+<div class="dashboard">
+
+    <div class="stat-card">
+
+        <h3>Total Registered</h3>
+
+        <p id="totalRegistered">0</p>
+
+    </div>
+
+    <div
+            class="stat-card"
+            onclick="loadAttendees('checkedIn')"
+            style="cursor:pointer;">
+
+        <h3>Checked In</h3>
+
+        <p id="checkedIn">0</p>
+
+    </div>
+
+    <div
+            class="stat-card"
+            onclick="loadAttendees('pending')"
+            style="cursor:pointer;">
+
+        <h3>Pending Check-In</h3>
+
+        <p id="pendingCheckIn">0</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h3>Passes Sent</h3>
+
+        <p id="passesSent">0</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h3>Passes Pending</h3>
+
+        <p id="passesPending">0</p>
+
+    </div>
+
+</div>
+
+<button
+        id="sendPassBtn"
+        onclick="sendPendingPasses()">
+
+    Send Pending Passes
+
+</button>
+
+<hr>
+
+<h2>Attendees</h2>
+
+<div id="attendeeList"></div>
+
+<hr>
+
+<h2>Attendee Details</h2>
+
+<div id="attendeeCard"></div>
+
+<script src="script.js"></script>
+
+<script>
+
+    loadDashboard();
+
+</script>
+
+</body>
+</html>

@@ -25,4 +25,8 @@ public interface AttendeeRepository extends JpaRepository<Attendee, UUID> {
     Long countByCheckedInTrue();
 
     Long countByMailSentTrue();
+
+    List<Attendee> findByCheckedInTrue();
+
+    List<Attendee> findByCheckedInFalse();
 }
