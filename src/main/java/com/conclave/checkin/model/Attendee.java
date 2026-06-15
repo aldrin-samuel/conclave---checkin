@@ -50,6 +50,17 @@ public class Attendee {
     @Column(name = "mail_sent_time")
     private LocalDateTime mailSentTime;
 
+    public String getPassUrl() {
+        return passUrl;
+    }
+
+    public void setPassUrl(String passUrl) {
+        this.passUrl = passUrl;
+    }
+
+    @Column(name = "pass_url")
+    private String passUrl;
+
     public UUID getUid() {
         return uid;
     }

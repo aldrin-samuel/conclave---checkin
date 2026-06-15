@@ -13,6 +13,9 @@ import java.util.List;
 public class AttendeeService {
 
     @Autowired
+    private SupabaseStorageService supabaseStorageService;
+
+    @Autowired
     private AttendeeRepository repository;
 
     @Autowired
@@ -43,6 +46,14 @@ public class AttendeeService {
                                 attendee,
                                 qr
                         );
+
+                String passUrl =
+                        supabaseStorageService.uploadPass(
+                                pass,
+                                attendee.getUid().toString()
+                        );
+
+                attendee.setPassUrl(passUrl);
 
                 emailService.sendPass(
                         attendee.getEmailId(),
